@@ -31,6 +31,7 @@
     <modules>
         <module>thread</module>
         <module>exception</module>
+        <module>enum</module>
     </modules>
 
 
@@ -55,6 +56,9 @@
             <artifactId>slf4j-nop</artifactId>
             <version>1.7.30</version>
         </dependency>
+
+
+
 
     </dependencies>
 
