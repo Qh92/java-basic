@@ -32,6 +32,7 @@
         <module>thread</module>
         <module>exception</module>
         <module>enum</module>
+        <module>collection</module>
     </modules>
 
 
