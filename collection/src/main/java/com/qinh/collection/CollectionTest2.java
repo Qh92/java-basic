@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.collection;
 
 import com.qinh.entites.Person;
 import org.junit.Test;
