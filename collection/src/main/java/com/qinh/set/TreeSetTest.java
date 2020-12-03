@@ -48,6 +48,7 @@ public class TreeSetTest {
         }
     }
 
+    //定制排序
     @Test
     public void t2(){
         Comparator comp = new Comparator() {
