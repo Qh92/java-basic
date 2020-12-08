@@ -82,7 +82,7 @@ public class CollectionTest2 {
          */
         Collection collection1 = Arrays.asList("123",456,false);
         collection.retainAll(collection1);
-        System.out.println(collection);
+        System.out.println(collection);//[456, false]
 
         /*
         6.equals(Object obj):要想返回true,需要判断当前集合和形参集合元素都相同
@@ -113,7 +113,7 @@ public class CollectionTest2 {
         collection.add(new Date());
         collection.add(456);
         collection.add(false);
-        System.out.println(collection2.equals(collection4));
+        System.out.println(collection2.equals(collection4));//true
 
     }
 
