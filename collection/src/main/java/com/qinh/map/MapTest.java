@@ -1,9 +1,12 @@
 package com.qinh.map;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *  一、Map的实现类的结构：
@@ -56,11 +59,104 @@ import java.util.Hashtable;
  *       4. jdk7底层结构只有：数组+链表。jdk8中底层结构：数组+链表+红黑树
  *          当数组的某一个索引位置上的元素以链表形式存在的数据个数 >8 且当前数组的长度 > 64时，此时此索引位置上的所有数据改为使用红黑树存储
  *
+ *
+ *        DEFAULT_INITIAL_CAPACITY ：HashMap的默认容量，16
+ *        DEFAULT_LOAD_FACTOR : HashMap的默认加载因子，0.75
+ *        threshold:扩容的临界值，=容量*填充因子：16 * 0.75 =>12
+ *        TREEIFY_THRESHOLD : Bucket中链表长度大于该默认值，转化为红黑树：8
+ *        MIN_TREEIFY_CAPACITY ： 桶中的Node被树化时最小的hash表容量：64
+ *
+ *
+ *    四、LinkedHashMap的底层实现原理
+ *        源码中：
+ *        static class Entry<K,V> extends HashMap.Node<K,V> {
+ *          Entry<K,V> before, after;//能够记录添加的元素的先后顺序
+ *          Entry(int hash, K key, V value, Node<K,V> next) {
+ *             super(hash, key, value, next);
+ *          }
+ *         }
+ *
+ *    五、Map接口中定义的方法：
+ *
+ *
  * @author Qh
  * @version 1.0
  * @date 2020-12-08-21:47
  */
 public class MapTest {
+    /*
+    元素查询的操作：
+    Object get(Object key):获取指定key对应的value
+    boolean containsKey(Object key):是否包含指定的key
+    boolean containsValue(Object value):是否包含指定的value
+    int size():返回map中key-value对的个数
+    boolean isEmpty():判断当前map是否为空
+    boolean equals(Object obj):判断当前map和参数对象obj是否相等
+     */
+    @Test
+    public void t4(){
+        Map map = new HashMap<>();
+        map.put("AA",123);
+        map.put("BB",456);
+        map.put("CC",999);
+
+        Map map2 = new HashMap<>();
+        map2.put("AA",123);
+        map2.put("BB",456);
+        map2.put("CC",999);
+        System.out.println(map.get("AA"));//123
+        System.out.println(map.containsKey("DD"));//false
+        System.out.println(map.containsValue(123));//true
+        System.out.println(map.size());//3
+        System.out.println(map.isEmpty());//false
+        System.out.println(map.equals(map2));//true
+    }
+
+    /*
+    添加、删除、修改操作
+    Object put(Object key,Object value):将指定key-value添加到（或修改）当前map对象中
+    void putAll(Map m):将m中的所有key-value对存放到当前map中
+    Object remove(Object key):移除指定key的key-value对，并返回value
+    void clear():清空当前map中的所有数据
+     */
+    @Test
+    public void t3(){
+        Map map = new HashMap<>();
+        //添加
+        map.put("AA",123);
+        map.put("BB",456);
+        map.put("CC",999);
+        //修改
+        map.put("AA",888);
+        System.out.println(map);//{AA=888, BB=456, CC=999}
+
+        //putAll
+        Map map2 = new HashMap<>();
+        map2.put("DD",123);
+        map2.put("EE",777);
+        map.putAll(map2);
+        System.out.println(map);//{AA=888, BB=456, CC=999, DD=123, EE=777}
+
+        //remove(Object key)
+        Object value = map.remove("AA");
+        System.out.println(value);//888
+        System.out.println(map);//{BB=456, CC=999, DD=123, EE=777}
+
+        //clear()
+        map.clear();
+        System.out.println(map.size());//0
+
+    }
+
+    @Test
+    public void t2(){
+        HashMap hashMap = new HashMap();
+        hashMap = new LinkedHashMap();
+        hashMap.put(123,"AAA");
+        hashMap.put(12,12);
+        hashMap.put(33,"vfd");
+        System.out.println(hashMap);
+    }
 
     @Test
     public void t1(){
