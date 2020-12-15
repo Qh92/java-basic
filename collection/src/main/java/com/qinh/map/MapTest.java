@@ -3,10 +3,7 @@ package com.qinh.map;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  一、Map的实现类的结构：
@@ -77,6 +74,13 @@ import java.util.Map;
  *         }
  *
  *    五、Map接口中定义的方法：
+ *    总结：常用的方法：
+ *    添加：Object put(Object key,Object value):将指定key-value添加到（或修改）当前map对象中
+ *    删除：Object remove(Object key):移除指定key的key-value对，并返回value
+ *    修改：Object put(Object key,Object value):将指定key-value添加到（或修改）当前map对象中
+ *    查询：Object get(Object key):获取指定key对应的value
+ *    长度：int size():返回map中key-value对的个数
+ *    遍历：Set keySet():返回所有key构成的Set集合 / Collection values():返回所有value构成的Collection集合 / Set entrySet():返回所有的key-value对构成的Set集合
  *
  *
  * @author Qh
@@ -84,6 +88,50 @@ import java.util.Map;
  * @date 2020-12-08-21:47
  */
 public class MapTest {
+    /*
+    元视图操作的方法：
+    Set keySet():返回所有key构成的Set集合
+    Collection values():返回所有value构成的Collection集合
+    Set entrySet():返回所有的key-value对构成的Set集合
+     */
+    @Test
+    public void t5(){
+        Map map = new HashMap<>();
+        map.put("AA",123);
+        map.put("BB",456);
+        map.put("CC",999);
+        //遍历所有的key集合：keySet()
+        Set set = map.keySet();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+
+        //遍历所有的values集：values()
+        Collection values = map.values();
+        for (Object i : values){
+            System.out.println(i);
+        }
+        //遍历所有的key-value
+        //方式1
+        Set entrySet = map.entrySet();
+        Iterator iterator1 = entrySet.iterator();
+        while (iterator1.hasNext()){
+            Object obj = iterator1.next();
+            //entrySet集合中的元素都是entry
+            Map.Entry entry = (Map.Entry)obj;
+            System.out.println(entry.getKey()+"-----"+entry.getValue());
+        }
+        //方式2
+        Set set2 = map.keySet();
+        Iterator iterator2 = set2.iterator();
+        while (iterator2.hasNext()){
+            Object key = iterator2.next();
+            System.out.println(key+"====="+map.get(key));
+        }
+    }
+
+
     /*
     元素查询的操作：
     Object get(Object key):获取指定key对应的value
