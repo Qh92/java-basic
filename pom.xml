@@ -33,6 +33,7 @@
         <module>exception</module>
         <module>enum</module>
         <module>collection</module>
+        <module>generic</module>
     </modules>
 
 
