@@ -59,14 +59,18 @@ class Number implements Runnable{
 public class CommunicationTest {
     public static void main(String[] args) {
         Number number = new Number();
+        Number number2 = new Number();
 
         Thread thread1 = new Thread(number);
         Thread thread2 = new Thread(number);
+        Thread thread3 = new Thread(number2);
 
         thread1.setName("线程1");
         thread2.setName("线程2");
+        thread3.setName("线程3");
 
         thread1.start();
         thread2.start();
+        thread3.start();
     }
 }
