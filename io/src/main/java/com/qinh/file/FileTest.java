@@ -34,6 +34,11 @@ public class FileTest {
     public void t1(){
         /*
          * 以下为内存层面的几个对象
+         * IDEA中：
+         * 如果开发使用JUnit中的单元测试方法测试，相对路径即为当前Module下
+         * 如果使用main()测试，相对路径即为当前Project下。
+         * Eclipse中：
+         * 不管使用单元测试方法还是使用main()测试，相对路径都是当前Project下。
          */
         //构造器1
         File file1 = new File("hello.txt");//相对于当前module
