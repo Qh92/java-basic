@@ -127,16 +127,74 @@ public class FileReaderWriterTest {
             如果流使用的构造器是：new FileWriter(file,true),不会对原有文件进行覆盖，而是在原有文件基础上追加内容
      */
     @Test
-    public void t3() throws IOException {
-        //1.提供File类的对象，指明写出到的文件
-        File file = new File("hello1.txt");
-        //2.提供FileWriter的对象，用于数据的写出
-        FileWriter fileWriter = new FileWriter(file,true);
-        //3.写出的操作
-        fileWriter.write("I hava a dream!\n");
-        fileWriter.write("you need to have a dream!");
-        //4.流资源的关闭
-        fileWriter.close();
+    public void t3()  {
+        FileWriter fileWriter = null;
+        try {
+            //1.提供File类的对象，指明写出到的文件
+            File file = new File("hello1.txt");
+            //2.提供FileWriter的对象，用于数据的写出
+            fileWriter = new FileWriter(file,true);
+            //3.写出的操作
+            fileWriter.write("I hava a dream!\n");
+            fileWriter.write("you need to have a dream!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.流资源的关闭
+            try {
+                if(fileWriter != null){
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    @Test
+    public void t4(){
+        FileReader fileReader = null;
+        FileWriter fileWriter = null;
+        try {
+            //1.创建File类的对象，指明读入和写入的文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello2.txt");
+            //不能使用字符流来处理图片等字节数据
+            /*File srcFile = new File("01.jpg");
+            File destFile = new File("011.jpg");*/
+            //2.创建输入流和输出流的对象
+            fileReader = new FileReader(srcFile);
+            fileWriter = new FileWriter(destFile);
+            //3.数据的读入和写出操作
+            char[] cbuf = new char[5];
+            int len;//记录每次读入到cbuf数组中的字符的个数
+            while ((len = fileReader.read(cbuf)) != -1){
+                //每次写出len个字符
+                fileWriter.write(cbuf,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            try {
+                if(fileReader != null){
+                    fileReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if(fileWriter != null){
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
