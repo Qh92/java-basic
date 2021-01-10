@@ -12,8 +12,11 @@ import java.io.*;
  * BufferedOutputStream
  * BufferedReader
  * BufferedWriter
+ *
  * 2.作用：提高流的读取、写入的速度
  *   提高读写速度的原因：内部提供了一个缓冲区
+ *
+ * 3.处理流，就是"套接"在已有的流的基础上
  *
  *
  * @author Qh
@@ -124,5 +127,54 @@ public class BufferedTest {
         copyFileWithBuffered(srcPath,destPath);
         long end = System.currentTimeMillis();
         System.out.println("复制操作花费的时间为："+(end - start));//164毫秒
+    }
+
+    /*
+    使用BufferReader和BufferedWriter实现文本文件的复制
+     */
+    @Test
+    public void t3(){
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        try {
+            //创建文件和相应的流
+            br = new BufferedReader(new FileReader(new File("dbcp.txt")));
+            bw = new BufferedWriter(new FileWriter(new File("dbcp1.txt")));
+
+            //读写操作
+            //方式1：使用char[]数组
+            /*char[] buffer = new char[1024];
+            int len;
+            while ((len = br.read(buffer)) != -1){
+                bw.write(buffer,0,len);
+                //bw.flush();
+            }*/
+            //方式2：使用String
+            String data;
+            while ((data = br.readLine()) != null){
+                //方式1
+                //bw.write(data + "\n");//data中不包含换行符
+                //方式2
+                bw.write(data);
+                bw.newLine();//提供换行的操作
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(br != null)
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(bw != null)
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }
