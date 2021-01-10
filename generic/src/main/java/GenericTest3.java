@@ -3,7 +3,6 @@ import demo2.Student;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,7 +108,7 @@ public class GenericTest3 {
     /*
     3.有限制条件的通配符的使用。
        ? extends A : G<? extends A>可以作为G<A>和G<B>的父类，其中B是A的子类
-       ? super A : G<? super A>可以作为G<A>和G<B>的子类，其中B是A的父类
+       ? super A : G<? super A>可以作为G<A>和G<B>的父类，其中B是A的父类
      */
     @Test
     public void t4(){
@@ -148,6 +147,7 @@ public class GenericTest3 {
         //编译运行都可以
         list2.add(new Person());
         list2.add(new Student());
+        //list2.add(new Object());
 
     }
 
