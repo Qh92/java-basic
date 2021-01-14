@@ -1,5 +1,6 @@
 package com.qinh.io;
 
+import com.qinh.entity.Account;
 import com.qinh.entity.Person;
 import org.junit.Test;
 
@@ -10,6 +11,10 @@ import java.io.*;
  * 1.ObjectInputStream 和 ObjectOutputStream
  * 2.作用：用于存储和读取基本数据类型数据或对象的处理流。它的强大之处就是可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。
  * 3.要想一个java对象是可序列化的，需要满足相应的要求。见Person.java
+ * 4.对象序列化机制允许把内存中的Java对象转换成平台无关的二进制流，从 而允许把这种二进制流持久地保存在磁盘上，
+ * 或通过网络将这种二进制流传 输到另一个网络节点。//当其它程序获取了这种二进制流，就可以恢复成原 来的Java对象
+ *
+ *
  *
  *
  * @Author Qh
@@ -28,12 +33,14 @@ public class ObjectInputOutputStreamTest {
             oos = new ObjectOutputStream(new FileOutputStream("object.dat"));
 
             oos.writeObject(new String("钢铁侠，蜘蛛侠！"));
-
             oos.flush();
-
             oos.writeObject(new Person("詹姆斯",36));
-
             oos.flush();
+
+            oos.writeObject(new Person("詹姆斯",36,new Account(100)));
+            oos.flush();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -62,9 +69,13 @@ public class ObjectInputOutputStreamTest {
 
             System.out.println(str);
 
-            Person p = (Person) ois.readObject();
+            Person p1 = (Person) ois.readObject();
 
-            System.out.println(p);
+            System.out.println(p1);
+
+            Person p2 = (Person) ois.readObject();
+
+            System.out.println(p2);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
