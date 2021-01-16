@@ -107,9 +107,5 @@ public class TCPTest2 {
                 e.printStackTrace();
             }
         }
-
-
-
-
     }
 }
