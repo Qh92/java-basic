@@ -37,6 +37,7 @@
         <module>io</module>
         <module>other</module>
         <module>stream</module>
+        <module>network</module>
     </modules>
 
 
