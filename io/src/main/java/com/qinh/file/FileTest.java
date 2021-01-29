@@ -21,8 +21,17 @@ public class FileTest {
 
     /*
     1.如何创建File类的实例
-        File(String filepath)
-        File(String parentPath,String childPath)
+        File(String filePath):
+            以filePath为路径创建File对象，可以是绝对路径或者相对路径，如果
+            filePath是相对路径，则默认的当前路径在系统属性user.dir中存储。
+            String property = System.getProperty("user.dir");
+
+        File(String parentPath,String childPath):
+            以parentPath为父路径， childPath为子路径创建File对象。
+
+        File(File parent,String child):
+            根据一个父File对象和子文件路径创建File对象。
+
     2.
     相对路径：相较于某个路径下，指明的路径
     绝对路径：包含盘符在内的文件或文件目录的路径
@@ -136,7 +145,7 @@ public class FileTest {
         System.out.println("----------------");
 
         File file2 = new File("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io");
-        file2 = new File("E:\\id");
+        //file2 = new File("E:\\id");
         System.out.println(file2.isDirectory());
         System.out.println(file2.isFile());
         System.out.println(file2.exists());
@@ -185,6 +194,15 @@ public class FileTest {
         //要想删除成功，de22目录下不能有子目录或文件
         File file = new File("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\test2\\de22");
         System.out.println(file.delete());
+
+    }
+
+    //系统属性测试
+    @Test
+    public void t8(){
+        //默认的当前路径
+        String property = System.getProperty("user.dir");
+        System.out.println(property);//E:\items\java-basic\io
 
     }
 }
