@@ -10,6 +10,7 @@ public class Person {
     public int age;
 
     public Person() {
+        System.out.println("空参构造器");
     }
 
     public Person(String name, int age) {
