@@ -30,8 +30,8 @@ public class Animal extends Creature<System> implements Comparable<String> ,MyIn
         System.out.println("动物类别是: " + kind);
     }
 
-    public String display(String feature){
-        return feature;
+    public String display(String feature,int age) throws NullPointerException,ClassCastException{
+        return feature + age;
     }
 
     @Override
