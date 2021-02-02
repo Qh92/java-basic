@@ -6,7 +6,7 @@ package com.qinh.entity;
  * @date 2021-02-01-0:48
  */
 @MyAnnotation(value = "hi")
-public class Animal extends Creature<System> implements Comparable<String> ,MyInterface{
+public class Animal extends Creature<String> implements Comparable<String> ,MyInterface{
 
     private String name;
     int age;
@@ -26,12 +26,13 @@ public class Animal extends Creature<System> implements Comparable<String> ,MyIn
     }
 
     @MyAnnotation(value = "猫科")
-    private void show(String kind){
+    private String show(String kind){
         System.out.println("动物类别是: " + kind);
+        return kind;
     }
 
-    public String display(String feature,int age) throws NullPointerException,ClassCastException{
-        return feature + age;
+    public void display(String feature,int age) throws NullPointerException,ClassCastException{
+        System.out.println("特征：" + feature + " 年纪: " + age);
     }
 
     @Override
@@ -42,5 +43,18 @@ public class Animal extends Creature<System> implements Comparable<String> ,MyIn
     @Override
     public int compareTo(String o) {
         return 0;
+    }
+
+    private static void showDesc(){
+        System.out.println("小动物有什么坏心眼。");
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                '}';
     }
 }
