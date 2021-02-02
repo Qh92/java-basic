@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
@@ -105,5 +107,81 @@ public class MethodTest {
 
     }
 
+    /**
+     * 获取运行时类的父类
+     */
+    @Test
+    public void t3(){
+        Class<Animal> clazz = Animal.class;
+        Class<? super Animal> superclass = clazz.getSuperclass();
+        System.out.println(superclass);
+    }
+
+    /**
+     * 获取运行时类带泛型的父类
+     */
+    @Test
+    public void t4(){
+        Class<Animal> clazz = Animal.class;
+        Type genericSuperclass = clazz.getGenericSuperclass();
+        System.out.println(genericSuperclass);
+    }
+
+    /**
+     * 获取运行时类带泛型的父类的泛型
+     */
+    @Test
+    public void t5(){
+        Class<Animal> clazz = Animal.class;
+        Type genericSuperclass = clazz.getGenericSuperclass();
+        ParameterizedType paramType = (ParameterizedType) genericSuperclass;
+        //获取泛型类型
+        Type[] actualTypeArguments = paramType.getActualTypeArguments();
+        for (Type t : actualTypeArguments){
+            System.out.println(t.getTypeName());
+            System.out.println(((Class)t).getName());
+        }
+    }
+
+    /**
+     * 获取运行时类实现的接口
+     */
+    @Test
+    public void t6(){
+        Class<Animal> clazz = Animal.class;
+
+        Class[] interfaces = clazz.getInterfaces();
+        for (Class c : interfaces){
+            System.out.println(c);
+        }
+        System.out.println();
+        //获取运行时类的父类实现的接口
+        Class[] interfaces1 = clazz.getSuperclass().getInterfaces();
+        for (Class c : interfaces1){
+            System.out.println(c);
+        }
+    }
+
+    /**
+     * 获取运行时类所在的包
+     */
+    @Test
+    public void t7(){
+        Class<Animal> clazz = Animal.class;
+        Package pack = clazz.getPackage();
+        System.out.println(pack);
+    }
+
+    /**
+     * 获取运行时类声明的注解
+     */
+    @Test
+    public void t8(){
+        Class<Animal> clazz = Animal.class;
+        Annotation[] annotations = clazz.getAnnotations();
+        for (Annotation a : annotations){
+            System.out.println(a);
+        }
+    }
 
 }
