@@ -225,4 +225,10 @@ public class StreamTest {
         System.out.println(min.get());
     }
 
+
+    @Test
+    public void t8(){
+        Stream.iterate(1, item -> item + 1).limit(10).forEach(System.out::println);
+    }
+
 }
