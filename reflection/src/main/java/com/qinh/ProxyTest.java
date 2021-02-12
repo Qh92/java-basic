@@ -31,6 +31,16 @@ class SuperMan implements Human {
     }
 }
 
+class HumanUtil{
+    public void method1(){
+        System.out.println("====通用方法1===");
+    }
+
+    public void method2(){
+        System.out.println("===通用方法2====");
+    }
+}
+
 /**
  * 要想实现动态代理，需要解决的问题？
  * 问题1：如何根据加载到内存中的被代理类，动态的创建一个代理类及其对象
@@ -62,9 +72,16 @@ class MyInvocationHandler implements InvocationHandler{
     //将被代理类要执行的方法a的功能就声明在invoke()中
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+        HumanUtil util = new HumanUtil();
+        util.method1();
+
         //method:即为代理类对象调用的方法，此方法也就作为了被代理类对象要调用的方法
         //object:被代理类的对象
         Object returnValue = method.invoke(object, args);
+
+        util.method2();
+
         //上述方法的返回值就作为当前类中的invoke()的返回值
         return returnValue;
     }
