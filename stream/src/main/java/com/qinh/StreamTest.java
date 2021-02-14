@@ -1,5 +1,7 @@
 package com.qinh;
 
+import com.qinh.entity.Person;
+import com.qinh.entity.PersonCountry;
 import org.junit.Before;
 import org.junit.Test;
 
