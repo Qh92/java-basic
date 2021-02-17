@@ -1,11 +1,13 @@
 package com.qinh;
 
 import org.junit.Test;
+import sun.misc.Launcher;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -16,6 +18,16 @@ import java.util.Properties;
  * @date 2021-01-31-20:54
  */
 public class ClassLoaderTest {
+
+    @Test
+    public void t0(){
+        //获取根类加载器所加载的全部URL数组
+        URL[] urLs = Launcher.getBootstrapClassPath().getURLs();
+        //遍历、输出根类加载器加载的全部URL
+        for (int i = 0;i < urLs.length; i++){
+            System.out.println(urLs[i].toExternalForm());
+        }
+    }
 
     @Test
     public void t1(){
