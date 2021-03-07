@@ -64,6 +64,11 @@ class VariableTest1 {
 		System.out.println(c4);
 
 		//② 表示方式：1.声明一个字符 2.转义字符 3.直接使用 Unicode 值来表示字符型常量
+		/*
+		1.直接通过单个字符来指定字符型值，eg.'A','9','0'
+		2.通过转义字符表示特殊字符型值，eg.'\n','\t'
+		3.直接使用Unicode值来表示字符型值，格式是'\uXXXX',其中XXXX代表一个十六进制的整数
+		 */
 		char c5 = '\n';//换行符
 		c5 = '\t';//制表符
 		System.out.print("hello" + c5);
