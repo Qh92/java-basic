@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 class VariableTest4 {
 	public static void main(String[] args) {

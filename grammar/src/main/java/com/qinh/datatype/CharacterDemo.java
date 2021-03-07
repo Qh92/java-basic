@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 class CharacterDemo {
 	public static void main(String[] args) {

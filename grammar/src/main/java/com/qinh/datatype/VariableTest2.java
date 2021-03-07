@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 基本数据类型之间的运算规则：

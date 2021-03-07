@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 计算机中不同进制的使用说明

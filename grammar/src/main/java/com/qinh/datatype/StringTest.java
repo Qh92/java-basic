@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 String类型变量的使用

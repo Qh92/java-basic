@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 强制类型转换：自动类型提升运算的逆运算。

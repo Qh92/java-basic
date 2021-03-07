@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 标识符的使用

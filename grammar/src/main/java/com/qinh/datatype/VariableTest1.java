@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.datatype;
 
 /*
 Java定义的数据类型
@@ -67,7 +67,7 @@ class VariableTest1 {
 		/*
 		1.直接通过单个字符来指定字符型值，eg.'A','9','0'
 		2.通过转义字符表示特殊字符型值，eg.'\n','\t'
-		3.直接使用Unicode值来表示字符型值，格式是'\uXXXX',其中XXXX代表一个十六进制的整数
+		3.直接使用Unicode值来表示字符型值，格式是'\u0043',其中0043代表一个十六进制的整数
 		 */
 		char c5 = '\n';//换行符
 		c5 = '\t';//制表符
