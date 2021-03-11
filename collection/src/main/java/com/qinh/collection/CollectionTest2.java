@@ -36,7 +36,7 @@ public class CollectionTest2 {
         2.containsAll(Collection coll):判断形参coll中的所有元素是否都存在于当前集合中。
          */
         Collection collection1 = Arrays.asList("123",456);
-        System.out.println(collection.contains(collection1));//false
+        System.out.println(collection.containsAll(collection1));//false
 
     }
 
