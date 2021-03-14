@@ -38,6 +38,10 @@
         <module>other</module>
         <module>stream</module>
         <module>network</module>
+        <module>reflection</module>
+        <module>lambda</module>
+        <module>grammar</module>
+        <module>array</module>
     </modules>
 
 
