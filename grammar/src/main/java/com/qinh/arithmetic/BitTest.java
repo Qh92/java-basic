@@ -62,6 +62,9 @@ public class BitTest {
 		short i = 12;
 		int j = i << 2;
 		System.out.println(j);
+
+		String hexString = Integer.toHexString(60);
+		System.out.println(hexString);
 	}
 
 
