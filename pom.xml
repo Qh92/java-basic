@@ -42,6 +42,7 @@
         <module>lambda</module>
         <module>grammar</module>
         <module>array</module>
+        <module>oop</module>
     </modules>
 
 
