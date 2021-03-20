@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.firststage;
 /*
  * 类中属性的使用
  * 

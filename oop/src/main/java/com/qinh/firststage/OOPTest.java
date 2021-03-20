@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.firststage;
 
 /**
  * 一、Java面向对象学习的三条主线

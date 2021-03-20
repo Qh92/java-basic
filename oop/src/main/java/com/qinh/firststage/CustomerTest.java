@@ -1,4 +1,4 @@
-package com.qinh;
+package com.qinh.firststage;
 /*
  * 类中方法的声明和使用
  * 
