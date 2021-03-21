@@ -1,4 +1,4 @@
-package com.qinh.firststageexer;
+package com.qinh.part1.exer;
 /*
  * 2.利用面向对象的编程方法，设计类Circle计算圆的面积。
  */

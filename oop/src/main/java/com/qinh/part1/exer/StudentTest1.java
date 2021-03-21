@@ -1,4 +1,4 @@
-package com.qinh.firststageexer;
+package com.qinh.part1.exer;
 /*
  * 4. 对象数组题目：
 定义类Student，包含三个属性：学号number(int)，年级state(int)，成绩score(int)。

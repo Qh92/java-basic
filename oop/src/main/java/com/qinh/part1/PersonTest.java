@@ -1,4 +1,4 @@
-package com.qinh.firststage;
+package com.qinh.part1;
 /*
  * 一、设计类，其实就是设计类的成员
  * 

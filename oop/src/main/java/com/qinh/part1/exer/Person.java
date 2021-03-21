@@ -1,4 +1,4 @@
-package com.qinh.firststageexer;
+package com.qinh.part1.exer;
 
 public class Person {
 	
