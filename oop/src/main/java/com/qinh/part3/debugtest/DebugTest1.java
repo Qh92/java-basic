@@ -1,4 +1,4 @@
-package com.qinh.debugtest;
+package com.qinh.part3.debugtest;
 
 
 public class DebugTest1 {

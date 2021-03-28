@@ -1,4 +1,4 @@
-package com.qinh.inheritance.supertest;
+package com.qinh.part3.inheritance.supertest;
 /*
  * super关键字的使用
  * 1.super理解为：父类的

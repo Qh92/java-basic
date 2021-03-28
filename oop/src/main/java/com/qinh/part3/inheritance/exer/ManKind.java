@@ -1,4 +1,4 @@
-package com.qinh.inheritance.exer;
+package com.qinh.part3.inheritance.exer;
 
 /**
  * @author Qh

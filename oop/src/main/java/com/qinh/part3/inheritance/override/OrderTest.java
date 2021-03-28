@@ -1,4 +1,4 @@
-package com.qinh.inheritance.override;
+package com.qinh.part3.inheritance.override;
 
 public class OrderTest {
 	public static void main(String[] args) {

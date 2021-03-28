@@ -1,6 +1,6 @@
-package com.qinh.inheritance.supertest;
+package com.qinh.part3.inheritance.supertest;
 
-import com.qinh.inheritance.override.Order;
+import com.qinh.part3.inheritance.override.Order;
 
 public class SubOrder extends Order {
 	

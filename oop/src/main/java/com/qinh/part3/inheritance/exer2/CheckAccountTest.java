@@ -1,4 +1,4 @@
-package com.qinh.inheritance.exer2;
+package com.qinh.part3.inheritance.exer2;
 /*
  * 写一个用户程序测试CheckAccount类。
  * 在用户程序中，创建一个账号为1122、余额为20000、年利率4.5%，可透支限额为5000元的CheckAccount对象。

@@ -1,4 +1,4 @@
-package com.qinh.inheritance.override;
+package com.qinh.part3.inheritance.override;
 /*
  * 体会4种不同的权限修饰
  * 

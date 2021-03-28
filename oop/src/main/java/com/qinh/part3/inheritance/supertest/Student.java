@@ -1,4 +1,4 @@
-package com.qinh.inheritance.supertest;
+package com.qinh.part3.inheritance.supertest;
 
 public class Student extends Person{
 	

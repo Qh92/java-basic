@@ -1,4 +1,4 @@
-package com.qinh.debugtest;
+package com.qinh.part3.debugtest;
 /*
  * 如何调试程序：
  * 1. System.out.println().

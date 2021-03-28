@@ -1,4 +1,4 @@
-package com.qinh.inheritance;
+package com.qinh.part3.inheritance;
 /*
  * 面向对象的特征之二：继承性    why?
  * 

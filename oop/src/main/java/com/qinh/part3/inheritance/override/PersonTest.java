@@ -1,4 +1,4 @@
-package com.qinh.inheritance.override;
+package com.qinh.part3.inheritance.override;
 /*
  * 方法的重写(override / overwrite)
  * 

@@ -1,4 +1,4 @@
-package com.qinh.inheritance.exer2;
+package com.qinh.part3.inheritance.exer2;
 /*
  * 创建Account类的一个子类CheckAccount代表可透支的账户，该账户中定义一个属性overdraft代表可透支限额。
  * 在CheckAccount类中重写withdraw方法，其算法如下：

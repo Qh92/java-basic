@@ -1,4 +1,4 @@
-package com.qinh.inheritance;
+package com.qinh.part3.inheritance;
 
 public class Student extends Person{
 	

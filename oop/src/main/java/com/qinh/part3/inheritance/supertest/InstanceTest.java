@@ -1,4 +1,4 @@
-package com.qinh.inheritance.supertest;
+package com.qinh.part3.inheritance.supertest;
 /*
  * 子类对象实例化的全过程
  * 
