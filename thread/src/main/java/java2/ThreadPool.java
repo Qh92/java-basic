@@ -57,11 +57,11 @@ public class ThreadPool {
         service.setKeepAliveTime(10, TimeUnit.SECONDS);
 
         //2.执行指定的线程的操作，需要提供实现Runnable接口或Callable接口实现类的对象
-        executorService.execute(new NumberThread1());//适用于Runnable
-        executorService.execute(new NumberThread2());//适用于Runnable
+        service.execute(new NumberThread1());//适用于Runnable
+        service.execute(new NumberThread2());//适用于Runnable
 //        executorService.submit();//适用于Callable
         //3.关闭线程池
-        executorService.shutdown();
+        service.shutdown();
 
     }
 }
