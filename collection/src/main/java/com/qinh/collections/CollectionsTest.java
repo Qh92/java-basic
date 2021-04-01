@@ -2,10 +2,7 @@ package com.qinh.collections;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Collections：操作Collection、Map的工具类
@@ -86,6 +83,20 @@ public class CollectionsTest {
         System.out.println(list);//[123, 333, 124, 555, 128, 567]*/
         /*int frequency = Collections.frequency(list, 123);
         System.out.println(frequency);//1*/
+
+    }
+
+    /**
+     * 确保一个集合不能被修改
+     */
+    @Test
+    public void t3(){
+        List<String> list = new ArrayList<>();
+        list.add("x");
+        List<String> list1 = Collections.unmodifiableList(list);
+        //list1.add("y");
+        //Collection<String> newList = Collections.unmodifiableCollection(list);
+        //newList.add("y");
 
     }
 }
