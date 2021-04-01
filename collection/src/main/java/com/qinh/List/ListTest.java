@@ -63,6 +63,11 @@ import java.util.*;
  *       ②增强for循环
  *       ③普通的循环
  *
+ *  六.Iterator 和 ListIterator 有什么区别？
+ *  Iterator 可以遍历 Set 和 List 集合，而 ListIterator 只能遍历 List。
+ *  Iterator 只能单向遍历，而 ListIterator 可以双向遍历（向前/后遍历）。
+ *  ListIterator 从 Iterator 接口继承，然后添加了一些额外的功能，
+ *  比如添加一个元素、替换一个元素、获取前面或后面元素的索引位置。
  *
  * @author Qh
  * @version 1.0
@@ -157,6 +162,22 @@ public class ListTest {
         //方式三：普通的循环
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
+        }
+    }
+
+    @Test
+    public void t4(){
+        ArrayList list = new ArrayList();
+        list.add(123);
+        list.add(456);
+        list.add("AA");
+        list.add(new Date());
+        list.add(new Person("Tome",12));
+
+        //从后往前遍历
+        ListIterator iterator = list.listIterator(list.size());
+        while(iterator.hasPrevious()){
+            System.out.println(iterator.previous());
         }
     }
 }
