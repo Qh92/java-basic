@@ -1,4 +1,4 @@
-package com.qinh.item.bean;
+package com.qinh.project2.bean;
 
 /**
  * Customer为实体对象，用来封装客户信息

@@ -1,8 +1,8 @@
-package com.qinh.item.ui;
+package com.qinh.project2.ui;
 
-import com.qinh.item.bean.Customer;
-import com.qinh.item.service.CustomerList;
-import com.qinh.item.util.CMUtility;
+import com.qinh.project2.bean.Customer;
+import com.qinh.project2.service.CustomerList;
+import com.qinh.project2.util.CMUtility;
 
 /**
  * CustomerView为主模块，负责菜单的显示和处理用户操作

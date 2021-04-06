@@ -1,6 +1,6 @@
-package com.qinh.item.service;
+package com.qinh.project2.service;
 
-import com.qinh.item.bean.Customer;
+import com.qinh.project2.bean.Customer;
 
 /**
  * CustomerList为Customer对象的管理模块，内部用数组管理一组Customer对象，
