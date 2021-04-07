@@ -43,6 +43,8 @@
         <module>grammar</module>
         <module>array</module>
         <module>oop</module>
+        <module>string</module>
+        <module>date</module>
     </modules>
 
 
