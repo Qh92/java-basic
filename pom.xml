@@ -45,6 +45,9 @@
         <module>oop</module>
         <module>string</module>
         <module>date</module>
+        <module>compare</module>
+        <module>commonclass</module>
+        <module>annotation</module>
     </modules>
 
 
