@@ -140,12 +140,12 @@ public class GenericTest3 {
         //编译不通过
         //Person p = list2.get(0);
 
-        //写入数据
-        //编译不通过
-        //list1.add(new Student());
-        //list1.add(new Person());
-        //编译运行都可以
-        list2.add(new Person());
+        //写入数据（多态解释）
+        //编译不通过 (无穷小 , Person]
+        //list1.add(new Student());//如果?是比Student还小的子类呢
+        //list1.add(new Person());//同理
+        //编译运行都可以 ?在[Person , 无穷大)范围内
+        list2.add(new Person());//多态
         list2.add(new Student());
         //list2.add(new Object());
 
