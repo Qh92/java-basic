@@ -28,7 +28,7 @@ import java.util.Scanner;
  *                  |----ClassCastException
  *                  |----NumberFormatException
  *                  |----InputMismatchException
- *                  |----ArithmaticException
+ *                  |----ArithmeticException
  *
  * 面试题：常见的异常都有哪些？举例说明。
  *
