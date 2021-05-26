@@ -11,6 +11,12 @@ import java.util.stream.Stream;
 
 /**
  * jdk8 stream类测试
+ * 中间方法：中间操作允许流保持打开状态，并允许直接调用后续方法。中间方法的返回值是另一个流
+ * 末端方法：末端方法是对流的最终操作。当对某个Stream执行末端方法后，该流将会被“消耗”且不再可用。
+ *
+ * 流还有如下两个特征：
+ * 有状态的方法：这种方法会给流增加一些新的属性，比如元素的唯一性、元素的最大数量、保证元素以排序的方法被处理等。有状态的方法往往需要更大的性能开销。
+ * 短路方法：短路方法可以尽早结束对流的操作，不必检查所有的元素。
  *
  * @author Qh
  * @version 1.0
@@ -124,6 +130,14 @@ public class StreamTest {
 
         sorted.forEach(System.out::println);
 
+    }
+
+    /*
+    - peek(Consumer<? super T> action):依次对每个元素执行一些操作，该方法返回的流与原有流包含相同的元素。
+     */
+    @Test
+    public void t9(){
+        personList.stream().peek(t -> t.setAge(10)).forEach(System.out::println);
     }
 
     /**

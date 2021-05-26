@@ -15,7 +15,7 @@ public class ThreadDemo {
 //        myThread1.start();
 //        myThread2.start();
 
-        //方式二 创建THread类的匿名子类
+        //方式二 创建Thread类的匿名子类
         new Thread(){
             @Override
             public void run() {
