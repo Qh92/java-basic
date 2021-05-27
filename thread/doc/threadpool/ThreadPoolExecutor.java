@@ -35,6 +35,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     // Packing and unpacking ctl
     private static int runStateOf(int c)     { return c & ~CAPACITY; }
     private static int workerCountOf(int c)  { return c & CAPACITY; }
+    // | 按位或  有1即1
     private static int ctlOf(int rs, int wc) { return rs | wc; }
 
     /*
@@ -185,6 +186,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * state to a negative value, and clear it upon start (in
      * runWorker).
      */
+    //内部类 Worker,存放实际工作的线程
     private final class Worker
         extends AbstractQueuedSynchronizer
         implements Runnable
@@ -196,6 +198,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         private static final long serialVersionUID = 6138294804551838833L;
 
         /** Thread this worker is running in.  Null if factory fails. */
+        //正在运行的线程
         final Thread thread;
         /** Initial task to run.  Possibly null. */
         Runnable firstTask;
@@ -228,11 +231,21 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
         protected boolean tryAcquire(int unused) {
             if (compareAndSetState(0, 1)) {
+                //将当前线程赋值给 private transient Thread exclusiveOwnerThread;
+                //protected final void setExclusiveOwnerThread(Thread thread) {
+                //        exclusiveOwnerThread = thread;
+                //    }
                 setExclusiveOwnerThread(Thread.currentThread());
                 return true;
             }
             return false;
         }
+        /*
+        父类 AbstractQueuedSynchronizer.class 中的方法
+            protected final boolean compareAndSetState(int expect, int update) {
+            // See below for intrinsics setup to support this
+            return unsafe.compareAndSwapInt(this, stateOffset, expect, update);
+        }*/
 
         protected boolean tryRelease(int unused) {
             setExclusiveOwnerThread(null);
@@ -330,6 +343,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * specially.
      */
     private void checkShutdownAccess() {
+        //获取启用的java安全管理器
         SecurityManager security = System.getSecurityManager();
         if (security != null) {
             security.checkPermission(shutdownPerm);
@@ -382,10 +396,12 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
+            //有序关闭正在执行的线程，不接受新的任务
             for (Worker w : workers) {
                 Thread t = w.thread;
                 if (!t.isInterrupted() && w.tryLock()) {
                     try {
+                        //停止线程,将停止标志设为 true
                         t.interrupt();
                     } catch (SecurityException ignore) {
                     } finally {
@@ -878,13 +894,17 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      *
      * @throws SecurityException {@inheritDoc}
      */
+    //关闭正在执行的任务，不接受新任务
     public void shutdown() {
+        //获取同步锁 this.mainLock = new ReentrantLock();
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
+            //检查是否有关闭线程的权限
             checkShutdownAccess();
             advanceRunState(SHUTDOWN);
             interruptIdleWorkers();
+            //钩子方法
             onShutdown(); // hook for ScheduledThreadPoolExecutor
         } finally {
             mainLock.unlock();
