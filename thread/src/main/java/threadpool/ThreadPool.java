@@ -1,5 +1,6 @@
 package threadpool;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -57,11 +58,23 @@ public class ThreadPool {
         service.setKeepAliveTime(10, TimeUnit.SECONDS);
 
         //2.执行指定的线程的操作，需要提供实现Runnable接口或Callable接口实现类的对象
-        service.execute(new NumberThread1());//适用于Runnable
-        service.execute(new NumberThread2());//适用于Runnable
+        int count = 20;
+        Runnable[] threads = new Runnable[count];
+        for (int i = 0; i < count; i++) {
+            NumberThread1 r = new NumberThread1();
+            Thread t = new Thread(r);
+            t.setName("线程"+i);
+            threads[i] = t;
+        }
+        for (Runnable t : threads){
+            service.execute(t);
+        }
+        //service.execute(new NumberThread1());//适用于Runnable
+        //service.execute(new NumberThread2());//适用于Runnable
 //        executorService.submit();//适用于Callable
         //3.关闭线程池
-        service.shutdown();
+        service.shutdownNow();
+
 
     }
 }
