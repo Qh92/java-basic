@@ -54,7 +54,7 @@ public class ThreadPool {
         ThreadPoolExecutor service = (ThreadPoolExecutor) executorService;
         System.out.println(executorService.getClass());
         //设置线程池的属性
-        service.setCorePoolSize(15);
+        service.setCorePoolSize(2);
         service.setKeepAliveTime(10, TimeUnit.SECONDS);
 
         //2.执行指定的线程的操作，需要提供实现Runnable接口或Callable接口实现类的对象
@@ -63,7 +63,7 @@ public class ThreadPool {
         for (int i = 0; i < count; i++) {
             NumberThread1 r = new NumberThread1();
             Thread t = new Thread(r);
-            t.setName("线程"+i);
+            //t.setName("线程"+i);
             threads[i] = t;
         }
         for (Runnable t : threads){
@@ -72,6 +72,7 @@ public class ThreadPool {
         //service.execute(new NumberThread1());//适用于Runnable
         //service.execute(new NumberThread2());//适用于Runnable
 //        executorService.submit();//适用于Callable
+
         //3.关闭线程池
         service.shutdownNow();
 

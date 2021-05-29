@@ -21,7 +21,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
     // runState is stored in the high-order bits
-    //1010 0000 0000 0000 0000 0000 0000 0000
+    //1010 0000 0000 0000 0000 0000 0000 0000 -536870912  --> 1101 1111 1111 1111 1111 1111 1111 1111 -> 1110 0000 0000 0000 0000 0000 0000 0000
+    // -536870911  1001 1111 1111 1111 1111 1111 1111 1111 --> 1110 0000 0000 0000 0000 0000 0000 0000 -> 1110 0000 0000 0000 0000 0000 0000 0001
     private static final int RUNNING    = -1 << COUNT_BITS;
     //0000 0000 0000 0000 0000 0000 0000 0000
     private static final int SHUTDOWN   =  0 << COUNT_BITS;
@@ -33,8 +34,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     private static final int TERMINATED =  3 << COUNT_BITS;
 
     // Packing and unpacking ctl
-    private static int runStateOf(int c)     { return c & ~CAPACITY; }
-    private static int workerCountOf(int c)  { return c & CAPACITY; }
+    // ctl 高低位来判断是线程池状态还是工作线程数量，线程池状态位于高位
+    private static int runStateOf(int c)     { return c & ~CAPACITY; } //~CAPACITY: 1110 0000 0000 0000 0000 0000 0000 0000
+    private static int workerCountOf(int c)  { return c & CAPACITY; } //CAPACITY: 0001 1111 1111 1111 1111 1111 1111 1111
     // | 按位或  有1即1
     private static int ctlOf(int rs, int wc) { return rs | wc; }
 
@@ -212,6 +214,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         Worker(Runnable firstTask) {
             setState(-1); // inhibit interrupts until runWorker
             this.firstTask = firstTask;
+            //将创建的线程再保证一层并设置线程前缀，线程优先级，设置线程为非守护线程
             this.thread = getThreadFactory().newThread(this);
         }
 
@@ -528,9 +531,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
       }
 
       /*
-              worker数量+1成功的后续操作
-            * 添加到 workers Set 集合，并启动 worker 线程
-             */
+         worker数量+1成功的后续操作
+       * 添加到 workers Set 集合，并启动 worker 线程
+       */
       boolean workerStarted = false;
       boolean workerAdded = false;
       Worker w = null;
@@ -540,6 +543,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         // 赋值给当前任务
         // 使用 worker 自身这个 runnable，调用 ThreadFactory 创建一个线程，并设置给worker的成员变量thread
         w = new Worker(firstTask);
+        //thread就是将我们自定义的线程再包装一层
         final Thread t = w.thread;
         if (t != null) {
           final ReentrantLock mainLock = this.mainLock;
@@ -853,7 +857,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         if (command == null)
             throw new NullPointerException();
         // 获取 ctl 的值
-        //1010 0000 0000 0000 0000 0000 0000 0000
+        //1010 0000 0000 0000 0000 0000 0000 0000 -536870912 第一个线程
         int c = ctl.get();
         // 判断 ctl 的值是否小于核心线程池的数量
         //1010 0000 0000 0000 0000 0000 0000 0000 & 0001 1111 1111 1111 1111 1111 1111 1111 = 0000 0000 0000 0000 0000 0000 0000 0000
@@ -865,11 +869,11 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
             // 线程添加不成功，需要再次判断，每需要一次判断都会获取 ctl 的值
             c = ctl.get();
         }
-        // 如果线程池处于运行状态并且能够成功的放入阻塞队列
+        // 如果当前线程处于运行状态并且能够成功的放入阻塞队列，阻塞队列为单向链表
         if (isRunning(c) && workQueue.offer(command)) {
-            // 再次进行检查
+            // 再次获取值，看线程状态是否已改变
             int recheck = ctl.get();
-            // 如果不是运行态并且成功的从阻塞队列中删除
+            // 如果不是运行状态并且成功的从阻塞队列中删除
             if (! isRunning(recheck) && remove(command))
                 // 执行拒绝策略
                 reject(command);
@@ -1096,6 +1100,10 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      *
      * @return {@code true} if a thread was started
      */
+    /**
+     * 创建完线程池后，提前创建一个工作线程
+     * @return
+     */
     public boolean prestartCoreThread() {
         return workerCountOf(ctl.get()) < corePoolSize &&
             addWorker(null, true);
@@ -1119,6 +1127,10 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * new tasks are executed.
      *
      * @return the number of threads started
+     */
+    /**
+     * 创建完线程池后，创建核心线程数量的工作线程
+     * @return
      */
     public int prestartAllCoreThreads() {
         int n = 0;
@@ -1161,6 +1173,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      *
      * @since 1.6
      */
+    //当核心线程没有任务处理时，并且等待时间大于keepAliveTime ，允许减少核心线程数量
     public void allowCoreThreadTimeOut(boolean value) {
         if (value && keepAliveTime <= 0)
             throw new IllegalArgumentException("Core threads must have nonzero keep alive times");
@@ -1527,6 +1540,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * directly in the calling thread of the {@code execute} method,
      * unless the executor has been shut down, in which case the task
      * is discarded.
+     * 由调用线程处理该任务
      */
     public static class CallerRunsPolicy implements RejectedExecutionHandler {
         /**
@@ -1550,6 +1564,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
     /**
      * A handler for rejected tasks that throws a
+     * 丢弃任务并抛出 RejectedExecutionException异常
+     *
      * {@code RejectedExecutionException}.
      */
     public static class AbortPolicy implements RejectedExecutionHandler {
@@ -1575,6 +1591,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     /**
      * A handler for rejected tasks that silently discards the
      * rejected task.
+     * 直接丢弃任务，但是不抛出异常
+     *
      */
     public static class DiscardPolicy implements RejectedExecutionHandler {
         /**
@@ -1596,6 +1614,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * A handler for rejected tasks that discards the oldest unhandled
      * request and then retries {@code execute}, unless the executor
      * is shut down, in which case the task is discarded.
+     * 直接丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
+     *
      */
     public static class DiscardOldestPolicy implements RejectedExecutionHandler {
         /**

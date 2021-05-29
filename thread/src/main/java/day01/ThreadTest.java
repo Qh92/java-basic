@@ -49,6 +49,7 @@ public class ThreadTest {
          */
         //我们需要重新创建一个线程对象
         MyThread t2 = new MyThread();
+        System.out.println(t2.getThreadGroup());
         t2.start();
 
         //如下操作仍然是在main线程中执行的

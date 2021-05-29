@@ -9,7 +9,9 @@ import java.security.PrivilegedActionException;
 import java.security.AccessControlException;
 import sun.security.util.SecurityConstants;
 
-
+/**
+ * 工具类
+ */
 public class Executors {
 
     
@@ -298,14 +300,22 @@ public class Executors {
         private final String namePrefix;
 
         DefaultThreadFactory() {
+            //是否启用安全管理器
             SecurityManager s = System.getSecurityManager();
+
             group = (s != null) ? s.getThreadGroup() :
                                   Thread.currentThread().getThreadGroup();
+            //线程名称前缀
             namePrefix = "pool-" +
                           poolNumber.getAndIncrement() +
                          "-thread-";
         }
 
+        /**
+         * 创建一个新的线程，并将线程设置为非守护线程，线程的优先级设置为普通
+         * @param r
+         * @return
+         */
         public Thread newThread(Runnable r) {
             Thread t = new Thread(group, r,
                                   namePrefix + threadNumber.getAndIncrement(),
