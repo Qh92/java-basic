@@ -21,6 +21,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
     // runState is stored in the high-order bits
+    //1010 0000 0000 0000 0000 0000 0000 0000  -536870912
+    //1000 0000 0000 0000 0000 0000 0000 0001（原码） -> 1111 1111 1111 1111 1111 1111 1111 1110（反码） -> 1111 1111 1111 1111 1111 1111 1111 1111（补码） << 29
+    //1110 0000 0000 0000 0000 0000 0000 0000（补码） -> 1101 1111 1111 1111 1111 1111 1111 1111（反码） -> 1010 0000 0000 0000 0000 0000 0000 0000（源码）
     //1010 0000 0000 0000 0000 0000 0000 0000 -536870912  --> 1101 1111 1111 1111 1111 1111 1111 1111 -> 1110 0000 0000 0000 0000 0000 0000 0000
     // -536870911  1001 1111 1111 1111 1111 1111 1111 1111 --> 1110 0000 0000 0000 0000 0000 0000 0000 -> 1110 0000 0000 0000 0000 0000 0000 0001
     private static final int RUNNING    = -1 << COUNT_BITS;
@@ -176,15 +179,15 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * Class Worker mainly maintains interrupt control state for
      * threads running tasks, along with other minor bookkeeping.
      * This class opportunistically extends AbstractQueuedSynchronizer
-     * to simplify acquiring and releasing a lock surrounding each
+     * to simplify acquiring and releasing a senior.juc.lock surrounding each
      * task execution.  This protects against interrupts that are
      * intended to wake up a worker thread waiting for a task from
      * instead interrupting a task being run.  We implement a simple
-     * non-reentrant mutual exclusion lock rather than use
+     * non-reentrant mutual exclusion senior.juc.lock rather than use
      * ReentrantLock because we do not want worker tasks to be able to
-     * reacquire the lock when they invoke pool control methods like
+     * reacquire the senior.juc.lock when they invoke pool control methods like
      * setCorePoolSize.  Additionally, to suppress interrupts until
-     * the thread actually starts running tasks, we initialize lock
+     * the thread actually starts running tasks, we initialize senior.juc.lock
      * state to a negative value, and clear it upon start (in
      * runWorker).
      */
@@ -468,16 +471,90 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * elements, it deletes them one by one.
      */
     private List<Runnable> drainQueue() {
+        // workQueue  = LinkedBlockingQueue
         BlockingQueue<Runnable> q = workQueue;
         ArrayList<Runnable> taskList = new ArrayList<Runnable>();
+        //将阻塞队列中的线程添加进 taskList 最后返回阻塞的线程
         q.drainTo(taskList);
+        //此时如果还有线程再往队列里面添加，就将添加的队列移除
         if (!q.isEmpty()) {
+            //new Runnable[0]:创建了长度为0的Runnable类型的数据
             for (Runnable r : q.toArray(new Runnable[0])) {
+                //移除队列
                 if (q.remove(r))
+                    //并将新添加的线程加入到集合中
                     taskList.add(r);
             }
         }
         return taskList;
+    }
+
+    //LinkedBlockingQueue代码
+    public int drainTo(Collection<? super E> c) {
+        return drainTo(c, Integer.MAX_VALUE);
+    }
+
+    public int drainTo(Collection<? super E> c, int maxElements) {
+        if (c == null)
+            throw new NullPointerException();
+        if (c == this)
+            throw new IllegalArgumentException();
+        if (maxElements <= 0)
+            return 0;
+        boolean signalNotFull = false;
+        final ReentrantLock takeLock = this.takeLock;
+        takeLock.lock();
+        try {
+            int n = Math.min(maxElements, count.get());
+            // count.get provides visibility to first n Nodes
+            //单向链表头 下一个指向阻塞队列的第一个线程
+            Node<E> h = head;
+            int i = 0;
+            try {
+                while (i < n) {
+                    Node<E> p = h.next;
+                    c.add(p.item);
+                    p.item = null;
+                    h.next = h;
+                    h = p;
+                    ++i;
+                }
+                return n;
+            } finally {
+                // Restore invariants even if c.add() threw
+                if (i > 0) {
+                    // assert h.item == null;
+                    head = h;
+                    signalNotFull = (count.getAndAdd(-i) == capacity);
+                }
+            }
+        } finally {
+            takeLock.unlock();
+            if (signalNotFull)
+                signalNotFull();
+        }
+    }
+
+    //LinkedBlockingQueue代码
+    public <T> T[] toArray(T[] a) {
+        fullyLock();
+        try {
+            //阻塞的线程数量
+            int size = count.get();
+            if (a.length < size)
+                //重新创建了一个数组长度为size的数据
+                a = (T[])java.lang.reflect.Array.newInstance
+                    (a.getClass().getComponentType(), size);
+
+            int k = 0;
+            for (Node<E> p = head.next; p != null; p = p.next)
+                a[k++] = (T)p.item;
+            if (a.length > k)
+                a[k] = null;
+            return a;
+        } finally {
+            fullyUnlock();
+        }
     }
 
     /*
@@ -715,7 +792,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * external code, in which case completedAbruptly holds, which
      * usually leads processWorkerExit to replace this thread.
      *
-     * 2. Before running any task, the lock is acquired to prevent
+     * 2. Before running any task, the senior.juc.lock is acquired to prevent
      * other pool interrupts while the task is executing, and then we
      * ensure that unless pool is stopping, this thread does not have
      * its interrupt set.
@@ -857,7 +934,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         if (command == null)
             throw new NullPointerException();
         // 获取 ctl 的值
-        //1010 0000 0000 0000 0000 0000 0000 0000 -536870912 第一个线程
+        //1010 0000 0000 0000 0000 0000 0000 0000
         int c = ctl.get();
         // 判断 ctl 的值是否小于核心线程池的数量
         //1010 0000 0000 0000 0000 0000 0000 0000 & 0001 1111 1111 1111 1111 1111 1111 1111 = 0000 0000 0000 0000 0000 0000 0000 0000
@@ -869,11 +946,11 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
             // 线程添加不成功，需要再次判断，每需要一次判断都会获取 ctl 的值
             c = ctl.get();
         }
-        // 如果当前线程处于运行状态并且能够成功的放入阻塞队列，阻塞队列为单向链表
+        // 如果线程池处于运行状态并且能够成功的放入阻塞队列
         if (isRunning(c) && workQueue.offer(command)) {
-            // 再次获取值，看线程状态是否已改变
+            // 再次进行检查
             int recheck = ctl.get();
-            // 如果不是运行状态并且成功的从阻塞队列中删除
+            // 如果不是运行态并且成功的从阻塞队列中删除
             if (! isRunning(recheck) && remove(command))
                 // 执行拒绝策略
                 reject(command);
@@ -1099,10 +1176,6 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * if all core threads have already been started.
      *
      * @return {@code true} if a thread was started
-     */
-    /**
-     * 创建完线程池后，提前创建一个工作线程
-     * @return
      */
     public boolean prestartCoreThread() {
         return workerCountOf(ctl.get()) < corePoolSize &&
@@ -1540,7 +1613,6 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * directly in the calling thread of the {@code execute} method,
      * unless the executor has been shut down, in which case the task
      * is discarded.
-     * 由调用线程处理该任务
      */
     public static class CallerRunsPolicy implements RejectedExecutionHandler {
         /**

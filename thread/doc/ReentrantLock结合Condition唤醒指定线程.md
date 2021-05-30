@@ -16,30 +16,30 @@ synchronized就相当于整个Lock对象中只有一个单一的Condition对象�
 
 public class Service02 {
 
-    private Lock lock = new ReentrantLock();
-    private Condition condition = lock.newCondition();
+    private Lock senior.juc.lock = new ReentrantLock();
+    private Condition condition = senior.juc.lock.newCondition();
 
     public void await() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("begin await() 时间为 " + System.currentTimeMillis());
             condition.await();
             System.out.println("end await() 时间为 " + System.currentTimeMillis());
         } catch(InterruptedException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
             System.out.println("锁被释放了！ await() 时间为 " + System.currentTimeMillis());
         }
     }
 
     public void signal() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("signal() 时间为 " + System.currentTimeMillis());
             condition.signal();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
             System.out.println("锁被释放了！ signal() 时间为 " + System.currentTimeMillis());
         }
     }
@@ -101,13 +101,13 @@ end await() 时间为 1496893243641
 // class Service03
 public class Service03 {
 
-    private Lock lock = new ReentrantLock();
-    private Condition conditionA = lock.newCondition();
-    private Condition conditionB = lock.newCondition();
+    private Lock senior.juc.lock = new ReentrantLock();
+    private Condition conditionA = senior.juc.lock.newCondition();
+    private Condition conditionB = senior.juc.lock.newCondition();
 
     public void awaitA() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("begin awaitA() 时间为 " + System.currentTimeMillis() 
                     + " ThreadName=" + Thread.currentThread().getName());
             conditionA.await();
@@ -116,13 +116,13 @@ public class Service03 {
         } catch(InterruptedException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
         }
     }
 
     public void awaitB() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("begin awaitB() 时间为 " + System.currentTimeMillis() 
                     + " ThreadName=" + Thread.currentThread().getName());
             conditionB.await();
@@ -131,29 +131,29 @@ public class Service03 {
         } catch(InterruptedException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
         }
     }
 
     public void signalAll_A() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("signalAll_A 时间为 " + System.currentTimeMillis()
                     + " ThreadName=" + Thread.currentThread().getName());
             conditionA.signalAll();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
         }
     }
 
     public void signalAll_B() {
         try{
-            lock.lock();
+            senior.juc.lock.senior.juc.lock();
             System.out.println("signalAll_B 时间为 " + System.currentTimeMillis()
                     + " ThreadName=" + Thread.currentThread().getName());
             conditionB.signalAll();
         } finally {
-            lock.unlock();
+            senior.juc.lock.unlock();
         }
     }
 

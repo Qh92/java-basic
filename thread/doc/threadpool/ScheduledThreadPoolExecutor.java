@@ -837,7 +837,7 @@ public class ScheduledThreadPoolExecutor
 
         /**
          * Sifts element added at bottom up to its heap-ordered spot.
-         * Call only when holding lock.
+         * Call only when holding senior.juc.lock.
          */
         private void siftUp(int k, RunnableScheduledFuture<?> key) {
             while (k > 0) {
@@ -855,7 +855,7 @@ public class ScheduledThreadPoolExecutor
 
         /**
          * Sifts element added at top down to its heap-ordered spot.
-         * Call only when holding lock.
+         * Call only when holding senior.juc.lock.
          */
         private void siftDown(int k, RunnableScheduledFuture<?> key) {
             int half = size >>> 1;
@@ -876,7 +876,7 @@ public class ScheduledThreadPoolExecutor
         }
 
         /**
-         * Resizes the heap array.  Call only when holding lock.
+         * Resizes the heap array.  Call only when holding senior.juc.lock.
          */
         private void grow() {
             int oldCapacity = queue.length;
@@ -1009,7 +1009,7 @@ public class ScheduledThreadPoolExecutor
         /**
          * Performs common bookkeeping for poll and take: Replaces
          * first element with last and sifts it down.  Call only when
-         * holding lock.
+         * holding senior.juc.lock.
          * @param f the task to remove and return
          */
         private RunnableScheduledFuture<?> finishPoll(RunnableScheduledFuture<?> f) {
@@ -1131,10 +1131,10 @@ public class ScheduledThreadPoolExecutor
 
         /**
          * Returns first element only if it is expired.
-         * Used only by drainTo.  Call only when holding lock.
+         * Used only by drainTo.  Call only when holding senior.juc.lock.
          */
         private RunnableScheduledFuture<?> peekExpired() {
-            // assert lock.isHeldByCurrentThread();
+            // assert senior.juc.lock.isHeldByCurrentThread();
             RunnableScheduledFuture<?> first = queue[0];
             return (first == null || first.getDelay(NANOSECONDS) > 0) ?
                 null : first;
