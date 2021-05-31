@@ -52,26 +52,67 @@ public class ThreadMethodTest {
         HelloThread thread = new HelloThread();
         thread.setName("线程1");
         //设置分线程的优先级
-        thread.setPriority(Thread.MAX_PRIORITY);
+        thread.setPriority(Thread.NORM_PRIORITY);
         thread.start();
 
-        //主线程
-        Thread.currentThread().setName("主线程1");
-        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-        for (int i = 0; i < 100; i++) {
-            if(i % 2 == 0 ){
-                System.out.println(Thread.currentThread().getName()+" : "+ +Thread.currentThread().getPriority()+" : "+i);
-            }
-            if ( i == 20){
-                try {
-                    thread.join();
+        try {
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+        //主线程
+        Thread.currentThread().setName("主线程1");
+        Thread.currentThread().setPriority(Thread.NORM_PRIORITY);
+
+
+        for (int i = 0; i < 100; i++) {
+            if(i % 2 == 0 ){
+
+                System.out.println(Thread.currentThread().getName()+" : "+ +Thread.currentThread().getPriority()+" : "+i);
+            }
+            if ( i == 20){
+                /*try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
             }
         }
 
         System.out.println(thread.isAlive());
 
+    }
+}
+
+class yield {
+
+
+    public static void main(String[] args) {
+        new Thread(() -> {
+            test();
+        }).start();
+
+        new Thread(() -> {
+            test();
+        }).start();
+
+
+        new Thread(() -> {
+            test();
+        }).start();
+
+
+    }
+
+    private static void test() {
+        for (int i = 0; i < 5; i++) {
+            //当i=0时让出cpu执行权，放弃时间片，进行下一轮调度
+            if ((i % 5) == 0) {
+                System.out.println(Thread.currentThread() + "yield cpu ...");
+                Thread.yield();
+            }
+
+        }
+        System.out.println(Thread.currentThread() + "is over");
     }
 }
