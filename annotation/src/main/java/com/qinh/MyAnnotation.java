@@ -20,7 +20,7 @@ import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
  * 注意：自定义注解必须配上注解的信息处理流程才有意义。
  *
  * @Retention: 只能用于修饰一个 Annotation 定义, 用于指定该 Annotation 的生命
- * 周期, @Rentention 包含一个 RetentionPolicy 类型的成员变量, 使用@Rentention 时必须为该 value 成员变量指定值:
+ * 周期, @Retention 包含一个 RetentionPolicy 类型的成员变量, 使用@Rentention 时必须为该 value 成员变量指定值:
  * RetentionPolicy.SOURCE:在源文件中有效（即源文件保留），编译器直接丢弃这种策略的注释
  * RetentionPolicy.CLASS:在class文件中有效（即class保留） ， 当运行 Java 程序时, JVM不会保留注解。 这是默认值
  * RetentionPolicy.RUNTIME:在运行时有效（即运行时保留），当运行 Java 程序时, JVM 会保留注释。程序可以通过反射获取该注释。
