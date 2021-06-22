@@ -28,9 +28,10 @@ public class TestPipe {
 
         //3. 读取缓冲区中的数据
         Pipe.SourceChannel sourceChannel = pipe.source();
-        buf.flip();
-        int len = sourceChannel.read(buf);
-        System.out.println(new String(buf.array(), 0, len));
+        //buf.flip();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        int len = sourceChannel.read(buffer);
+        System.out.println(new String(buffer.array(), 0, len));
 
         sourceChannel.close();
         sinkChannel.close();

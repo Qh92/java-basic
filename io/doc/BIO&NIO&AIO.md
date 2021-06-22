@@ -54,7 +54,7 @@ NIO（AIO）中几个概念
 
 NIO基于块进行数据处理，在NIO中所有数据的读取都是通过缓冲Buffer进行处理。
 
-     具体的缓存区有这些：ByteBuffe、CharBuffer、 ShortBuffer、IntBuffer、LongBuffer、FloatBuffer、DoubleBuffer。他们实现了相同的接口：Buffer。
+     具体的缓存区有这些：ByteBuffe、CharBuffer、 ShortBuffer、IntBuffer、LongBuffer、FloatBuffer、DoubleBuffer。他们继承了相同的父类：Buffer。
 
 通道 Channel
 

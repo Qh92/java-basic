@@ -22,15 +22,16 @@ public class FilesTest {
 
     @Test
     public void t1() throws IOException {
+        String file = "E:\\ideaWorkspace\\java-basic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java";
         //复制文件
-        Files.copy(Paths.get("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java"),new FileOutputStream("a.txt"));
+        Files.copy(Paths.get(file),new FileOutputStream("a.txt"));
         //判断FilesTest.java文件是否为隐藏文件
-        System.out.println("FilesTest.java是否为隐藏文件: " + Files.isHidden(Paths.get("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java")));
+        System.out.println("FilesTest.java是否为隐藏文件: " + Files.isHidden(Paths.get(file)));
         //一次性读取FilesTest.java文件的所有行
-        List<String> lines = Files.readAllLines(Paths.get("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java"), Charset.forName("utf-8"));
+        List<String> lines = Files.readAllLines(Paths.get(file), Charset.forName("utf-8"));
         System.out.println(lines);
         //判断指定文件的大小
-        System.out.println("FilesTest.java的大小为: " + Files.size(Paths.get("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java")));
+        System.out.println("FilesTest.java的大小为: " + Files.size(Paths.get(file)));
         //直接将多个字符串内容写入指定文件中
         ArrayList<String> poem = new ArrayList<>();
         poem.add("水晶潭底银鱼跃");
@@ -40,7 +41,7 @@ public class FilesTest {
         //列出当前目录下所有文件和子目录
         Files.list(Paths.get(".")).forEach(path -> System.out.println(path));
         //读取文件内容
-        Files.lines(Paths.get("E:\\ideaWorkspace\\project\\java_edu\\javabasic\\io\\src\\main\\java\\com\\qinh\\nio\\nio2\\FilesTest.java"),Charset.forName("utf-8")).forEach(line -> System.out.println(line));
+        Files.lines(Paths.get(file),Charset.forName("utf-8")).forEach(line -> System.out.println(line));
         //判断C盘的总空间、可用空间
         FileStore cStore = Files.getFileStore(Paths.get("C:"));
         System.out.println("C:共有空间: " + cStore.getTotalSpace());
