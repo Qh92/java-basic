@@ -7,6 +7,9 @@ import java.lang.annotation.ElementType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Qh
@@ -111,6 +114,8 @@ public class ReflectionTest {
     @Test
     public void t4(){
         Class c1 = Object.class;
+        Class<Map.Entry> entryClass = HashMap.Entry.class;
+        Class<AbstractMap.SimpleEntry> simpleEntryClass = HashMap.SimpleEntry.class;
         Class c2 = Comparable.class;
         Class c3 = String[].class;
         Class c4 = int[][].class;
