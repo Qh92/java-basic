@@ -92,7 +92,7 @@ public class JDK8DateTimeTest {
         long epochMilli = instant.toEpochMilli();
         System.out.println(epochMilli);
 
-        //ofofEpochMilli(Long time):通过给定的毫秒数，获取Instant实例  -->Date(long millis)
+        //ofEpochMilli(Long time):通过给定的毫秒数，获取Instant实例  -->Date(long millis)
         Instant instant1 = Instant.ofEpochMilli(1618050105335L);
         System.out.println(instant1);
     }
