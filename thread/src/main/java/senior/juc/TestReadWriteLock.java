@@ -1,5 +1,6 @@
 package senior.juc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -31,7 +32,7 @@ public class TestReadWriteLock {
 				public void run() {
 					rw.get();
 				}
-			}).start();
+			},"Read").start();
 		}
 	}
 	
@@ -48,6 +49,11 @@ class ReadWriteLockDemo{
 		lock.readLock().lock(); //上锁
 		
 		try{
+			try {
+				TimeUnit.MILLISECONDS.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			System.out.println(Thread.currentThread().getName() + " : " + number);
 		}finally{
 			lock.readLock().unlock(); //释放锁
@@ -59,7 +65,7 @@ class ReadWriteLockDemo{
 		lock.writeLock().lock();
 		
 		try{
-			System.out.println(Thread.currentThread().getName());
+			System.out.println(Thread.currentThread().getName() + " : " + number);
 			this.number = number;
 		}finally{
 			lock.writeLock().unlock();
