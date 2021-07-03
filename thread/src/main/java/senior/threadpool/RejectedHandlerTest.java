@@ -14,16 +14,16 @@ import java.util.concurrent.*;
  *
  *   (4) 将任务交由主线程即调用者来执行该任务 CallerRunsPolicy
  *
- * @Author Qh
- * @Date 2021/5/28 16:00
- * @Version 1.0
+ * @author Qh
+ * @date 2021/5/28 16:00
+ * @version 1.0
  */
 public class RejectedHandlerTest {
 
     public static void main(String[] args){
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 15, 100,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.DiscardOldestPolicy());
+                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(5), Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy());
         int count = 30;
         Runnable[] threads = new Runnable[count];
         for (int i = 0; i < count; i++) {
@@ -33,11 +33,15 @@ public class RejectedHandlerTest {
                 }
             };
         }
-        for (Runnable t : threads){
-            poolExecutor.execute(t);
+        try {
+            for (Runnable t : threads){
+                poolExecutor.execute(t);
+            }
+        }finally {
+            poolExecutor.shutdown();
         }
-        poolExecutor.shutdown();
-        poolExecutor.execute(threads[20]);
+
+        //poolExecutor.execute(threads[20]);
     }
 }
 
