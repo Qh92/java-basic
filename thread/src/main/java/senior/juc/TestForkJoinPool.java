@@ -9,6 +9,13 @@ import java.util.stream.LongStream;
 
 import org.junit.Test;
 
+/**
+ * 分支合并
+ *
+ * @author Qh
+ * @version 1.0
+ * @date 2021-07-03-15:46
+ */
 public class TestForkJoinPool {
 	
 	public static void main(String[] args) {
@@ -72,7 +79,7 @@ class ForkJoinSumCalculate extends RecursiveTask<Long>{
 	private long start;
 	private long end;
 	
-	private static final long THURSHOLD = 10000L;  //临界值
+	private static final long THRESHOLD = 10000L;  //临界值
 	
 	public ForkJoinSumCalculate(long start, long end) {
 		this.start = start;
@@ -83,7 +90,7 @@ class ForkJoinSumCalculate extends RecursiveTask<Long>{
 	protected Long compute() {
 		long length = end - start;
 		
-		if(length <= THURSHOLD){
+		if(length <= THRESHOLD){
 			long sum = 0L;
 			
 			for (long i = start; i <= end; i++) {
