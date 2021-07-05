@@ -2,6 +2,7 @@ package com.qinh;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Comparator;
 
 /**
@@ -52,6 +53,21 @@ public class LambdaTest {
         Comparator<Integer> com3 = Integer::compare;
         int compare3 = com3.compare(32, 21);
         System.out.println(compare3);
+    }
+
+    @Test
+    public void t3(){
+        MyInterface test = System.out::println;
+        MyInterface test2 = s -> {
+            try {
+                test.method1("this is a test");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+        MyInterface test3 = s -> {
+            test.method2();
+        };
     }
 
 }

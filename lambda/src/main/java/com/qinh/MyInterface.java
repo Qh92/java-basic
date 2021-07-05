@@ -1,5 +1,7 @@
 package com.qinh;
 
+import java.io.IOException;
+
 /**
  * 自定义函数式接口
  *
@@ -10,7 +12,9 @@ package com.qinh;
 @FunctionalInterface
 public interface MyInterface {
 
-    void method1();
+    void method1(String str) throws IOException;
 
-    //void method2();
+    default void method2() throws RuntimeException{
+        System.out.println("method2");
+    };
 }
