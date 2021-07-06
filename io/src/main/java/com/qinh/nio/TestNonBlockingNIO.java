@@ -36,6 +36,40 @@ import java.util.Scanner;
  * @date 2021-04-11-22:16
  */
 public class TestNonBlockingNIO {
+    
+    public static void main(String[] args) throws IOException {
+
+        //1.获取通道
+        SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9998));
+
+        //2.切换非阻塞模式
+        socketChannel.configureBlocking(false);
+
+        //FileChannel inChannel = FileChannel.open(Paths.get("01.jpg"), StandardOpenOption.READ);
+
+        //3.分配指定大小的缓冲区
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+        //4.发送数据到服务器端
+        /*buffer.put(LocalDateTime.now().toString().getBytes());
+        buffer.flip();
+        socketChannel.write(buffer);
+        buffer.clear();*/
+
+        //4. 发送数据给服务端
+        Scanner scan = new Scanner(System.in);
+        while(scan.hasNext()){
+            String str = scan.next();
+            buffer.put((LocalDateTime.now().toString() + "\n" + str).getBytes());
+            buffer.flip();
+            socketChannel.write(buffer);
+            buffer.clear();
+        }
+
+        //5.关闭通道
+        //inChannel.close();
+        socketChannel.close();
+    }
 
     //客户端
     @Test
