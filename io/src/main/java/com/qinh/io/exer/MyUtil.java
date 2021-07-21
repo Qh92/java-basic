@@ -67,8 +67,6 @@ class Person implements Serializable {
 
 /**
  * 小汽车类
- * @author nnngu
- *
  */
 class Car implements Serializable {
     private static final long serialVersionUID = -5713945027627603702L;

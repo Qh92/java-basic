@@ -106,7 +106,7 @@ private InputStream getInIfOpen() throws IOException {
 
 //BufferedInputStream#read1(byte[] b, int off, int len)
 private int read1(byte[] b, int off, int len) throws IOException {
-    //第一次读取时，count = 0,pos = 0
+    //第一次读取时，count = 0(默认值),pos = 0
     //第二次读取时，count = 8192, pos = 10
     //...
     //读取到最后时，count = 8192,pos = 8190
@@ -180,3 +180,14 @@ private void fill() throws IOException {
         //count = 8192
         count = n + pos;
 }
+
+/*
+public static void arraycopy(Object src,int srcPos,Object dest,int destPos,int length)
+从指定源数组中复制一个数组，复制从指定的位置开始，到目标数组的指定位置结束。
+从 src 引用的源数组到 dest 引用的目标数组，数组组件的一个子序列被复制下来。被复制的组件的编号等于 length 参数。
+源数组中位置在 srcPos 到 srcPos+length-1 之间的组件被分别复制到目标数组中的 destPos 到 destPos+length-1 位置。
+
+如果参数 src 和 dest 引用相同的数组对象，则复制的执行过程就好像首先将 srcPos 到 srcPos+length-1 位置的组件复制到一个带有 length 组件的临时数组，然后再将此临时数组的内容复制到目标数组的 destPos 到 destPos+length-1 位置一样。
+If 如果 dest 为 null，则抛出 NullPointerException 异常。
+如果 src 为 null, 则抛出 NullPointerException 异常，并且不会修改目标数组。
+*/
