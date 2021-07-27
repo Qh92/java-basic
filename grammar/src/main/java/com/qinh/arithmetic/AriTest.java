@@ -32,6 +32,7 @@ public class AriTest {
 		double result7 = (double)(num1 / num2);//2.0
 		System.out.println(result5);
 		System.out.println(result6);
+		System.out.println("无穷大: " + 1.0 / 0);
 
 		// %:取余运算
 		//结果的符号与被模数的符号相同
