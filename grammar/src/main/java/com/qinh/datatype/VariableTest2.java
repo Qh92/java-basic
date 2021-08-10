@@ -51,6 +51,12 @@ class VariableTest2 {
 		//short s4 = b1 + b2;//编译不通过
 		//****************************************
 
+		//字符可以赋值给byte、short、int
+		byte b = 'c';
+		byte b3 = (byte)'c';
+		short s3 = '\u0000';
+		int i5 = 'd';
+
 	}
 }
 
