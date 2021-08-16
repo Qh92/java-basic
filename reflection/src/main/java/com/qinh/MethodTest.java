@@ -4,10 +4,7 @@ import com.qinh.entity.Animal;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.Objects;
 
 /**
@@ -100,7 +97,13 @@ public class MethodTest {
                     System.out.print(exceptionTypes[i].getName() + ",");
                 }
             }
-
+            //7.参数信息
+            Parameter[] parameters = m.getParameters();
+            for(Parameter p : parameters){
+                //if(p.isNamePresent()){
+                    System.out.println("参数名：" + p.getName() + " 形参类型：" + p.getType() + " 泛型类型：" + p.getParameterizedType()+"/n");
+                //}
+            }
 
             System.out.println();
         }
@@ -181,6 +184,23 @@ public class MethodTest {
         Annotation[] annotations = clazz.getAnnotations();
         for (Annotation a : annotations){
             System.out.println(a);
+        }
+    }
+
+    @Test
+    public void t9(){
+        Class<Animal> clazz = Animal.class;
+        try {
+            Constructor<Animal> constructor = clazz.getDeclaredConstructor();
+            Animal animal = constructor.newInstance();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
     }
 
