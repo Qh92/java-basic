@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -43,6 +45,19 @@ public class StreanAPITest1 {
         list.add(new Employee(1010,"刘强东",40,8000));
 
         list.stream().distinct().forEach(System.out::println);
+
+        System.out.println("稍许复杂的filter------------");
+        list.stream().filter(distinctByProperty(e -> e.getName())).forEach(System.out::println);
+
+    }
+
+    private static <T>Predicate<T> distinctByProperty(Function<? super T,?> property){
+        List list = new ArrayList();
+        return t -> {
+            boolean flag = !list.contains(property.apply(t));
+            list.add(property.apply(t));
+            return flag;
+        };
     }
 
     /**
