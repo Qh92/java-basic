@@ -51,13 +51,21 @@ public class StreanAPITest1 {
 
     }
 
-    private static <T>Predicate<T> distinctByProperty(Function<? super T,?> property){
+    public static <T>Predicate<T> distinctByProperty(Function<? super T,?> property){
         List list = new ArrayList();
-        return t -> {
+        return new Predicate<T>(){
+            @Override
+            public boolean test(T t) {
+                boolean flag = !list.contains(property.apply(t));
+                list.add(property.apply(t));
+                return flag;
+            }
+        };
+        /*return t -> {
             boolean flag = !list.contains(property.apply(t));
             list.add(property.apply(t));
             return flag;
-        };
+        };*/
     }
 
     /**
