@@ -94,4 +94,98 @@ public class OptionalTest {
         String girlName = getGirlName2(boy);
         System.out.println(girlName);
     }
+
+    /**
+     * 这两个函数的区别：
+     * 当user值不为null时，orElse函数依然会执行createUser()方法，
+     * 而orElseGet函数并不会执行createUser()方法
+     */
+    @Test
+    public void t6(){
+        Boy boy = new Boy();
+        //boy = null;
+        boy = Optional.ofNullable(boy).orElse(createUser());
+        System.out.println(boy);
+        boy = Optional.ofNullable(boy).orElseGet(() -> createUser());
+        System.out.println(boy);
+    }
+
+    public Boy createUser(){
+        Boy boy = new Boy();
+        boy.setGirl(new Girl("晶晶妹"));
+        return boy;
+    }
+
+    @Test
+    public void t7() throws Exception {
+        Boy boy = new Boy();
+        String girl = Optional.ofNullable(boy).map(b -> b.getGirl()).map(g -> g.getName()).orElseThrow(() -> new Exception("取值错误"));
+        System.out.println(girl);
+    }
+
+    /*
+    实战使用
+
+    例一
+
+    在函数方法中
+    以前写法
+    public String getCity(User user)  throws Exception{
+            if(user!=null){
+                if(user.getAddress()!=null){
+                    Address address = user.getAddress();
+                    if(address.getCity()!=null){
+                        return address.getCity();
+                    }
+                }
+            }
+            throw new Excpetion("取值错误");
+        }
+    JAVA8写法
+    public String getCity(User user) throws Exception{
+        return Optional.ofNullable(user)
+                       .map(u-> u.getAddress())
+                       .map(a->a.getCity())
+                       .orElseThrow(()->new Exception("取指错误"));
+    }
+    例二
+
+    比如，在主程序中
+    以前写法
+    if(user!=null){
+        dosomething(user);
+    }
+    JAVA8写法
+     Optional.ofNullable(user)
+        .ifPresent(u->{
+            dosomething(u);
+    });
+    例三
+
+    以前写法
+    public User getUser(User user) throws Exception{
+        if(user!=null){
+            String name = user.getName();
+            if("zhangsan".equals(name)){
+                return user;
+            }
+        }else{
+            user = new User();
+            user.setName("zhangsan");
+            return user;
+        }
+    }
+    java8写法
+    public User getUser(User user) {
+        return Optional.ofNullable(user)
+                       .filter(u->"zhangsan".equals(u.getName()))
+                       .orElseGet(()-> {
+                            User user1 = new User();
+                            user1.setName("zhangsan");
+                            return user1;
+                       });
+    }
+     */
+
+
 }
