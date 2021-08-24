@@ -26,6 +26,9 @@ public class EmployeeData {
 		list.add(new Employee(1006, "比尔盖茨", 42, 9500.43));
 		list.add(new Employee(1007, "任正非", 26, 4333.32));
 		list.add(new Employee(1008, "扎克伯格", 35, 2500.32));
+		list.add(new Employee(1009, "马化腾", 34, 9999.99));
+		list.add(new Employee(1010, "比尔盖茨", 42, 8888.88));
+		list.add(new Employee(1011, "秦皓", 29, 11111.11));
 		
 		return list;
 	}
