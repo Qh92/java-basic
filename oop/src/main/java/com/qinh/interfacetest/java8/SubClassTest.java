@@ -1,6 +1,9 @@
 package com.qinh.interfacetest.java8;
 
 /**
+ * 接口中静态方法的调用：只能通过接口来调用
+ * 接口中的默认方法的调用：子类对象、接口.super调用
+ *
  * @author Qh
  * @version 1.0
  * @date 2021-04-05-23:42
@@ -28,10 +31,10 @@ public class SubClassTest {
 }
 
 class SubClass extends SuperClass implements CompareA,CompareB{
-    @Override
+    /*@Override
     public void method2() {
         System.out.println("SubClass:上海");
-    }
+    }*/
 
     @Override
     public void method3() {
