@@ -1,8 +1,9 @@
-package senior.juc;
+package senior.juc.volatiletest;
 
 /*
  * 一、volatile 关键字：当多个线程进行操作共享数据时，可以保证内存中的数据可见。
  * 					  相较于 synchronized 是一种较为轻量级的同步策略。
+ * volatile:1.线程可见性 2.禁止指令重排序 3.但是不能保证原子性
  * 
  * 注意：
  * 1. volatile 不具备“互斥性”
@@ -27,6 +28,7 @@ public class TestVolatile {
 
 class ThreadDemo2 implements Runnable {
 
+	/** 共享变量 */
 	private volatile boolean flag = false;
 
 	@Override
