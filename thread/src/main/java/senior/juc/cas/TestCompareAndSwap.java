@@ -1,4 +1,4 @@
-package senior.juc;
+package senior.juc.cas;
 
 /*
  * 模拟 CAS 算法

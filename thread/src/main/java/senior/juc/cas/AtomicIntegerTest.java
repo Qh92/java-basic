@@ -1,4 +1,4 @@
-package senior.juc;
+package senior.juc.cas;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
