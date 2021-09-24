@@ -3,6 +3,8 @@ package senior.juc.cas;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * 原子引用
+ *
  * @author Qh
  * @version 1.0
  * @date 2021-09-24-0:19
