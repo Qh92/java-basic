@@ -1,4 +1,4 @@
-package senior.juc.lock;
+package senior.juc.lock.countdownlatch;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -16,11 +16,13 @@ public class CountDownLatchDemo {
         for (int i = 0; i < 6; i++) {
             new Thread(() -> {
                 System.out.println(Thread.currentThread().getName() + "同学离开教室");
+                //调用 countDown() 方法会将计数器减一
                 latch.countDown();
             },String.valueOf(i)).start();
         }
         try {
             //会一直阻塞，直到数量减少至0
+            //当计数器的值变为0时，因调用 await() 方法被阻塞的线程会被唤醒，继续执行
             latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
