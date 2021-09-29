@@ -1,4 +1,4 @@
-package senior.juc.lock;
+package senior.juc.lock.semaphore;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
@@ -23,6 +23,7 @@ public class SemaphoreDemo {
         for (int i = 1; i <=6; i++){//模拟6部汽车
             new Thread(() -> {
                 try {
+                    //一个线程调用acquire操作时，它要么通过成功获取信号量（信号量减1）
                     semaphore.acquire();
                     System.out.println(Thread.currentThread().getName()+"\t 抢到了车位");
                     TimeUnit.SECONDS.sleep(new Random().nextInt(5));
@@ -30,6 +31,7 @@ public class SemaphoreDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally {
+                    //实际上会将信号量的值加1，然后唤醒等待的线程
                     semaphore.release();
                 }
             }, String.valueOf(i)).start();

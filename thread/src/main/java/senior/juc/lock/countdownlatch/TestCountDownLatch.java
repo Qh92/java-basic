@@ -1,4 +1,4 @@
-package senior.juc.lock;
+package senior.juc.lock.countdownlatch;
 
 import java.util.concurrent.CountDownLatch;
 
