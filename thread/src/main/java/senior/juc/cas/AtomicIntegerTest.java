@@ -22,7 +22,7 @@ public class AtomicIntegerTest {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i < 1000; i++) {
+                    for (int i = 0; i < 10000; i++) {
                         increase();
                     }
                 }
@@ -30,7 +30,7 @@ public class AtomicIntegerTest {
             threads[i].start();
         }
 
-        while (Thread.activeCount() > 1) {
+        while (Thread.activeCount() > 2) {
             Thread.yield();
         }
         System.out.println(count);
@@ -67,7 +67,7 @@ class AtomicIntegerTest2 {
             threads[i].start();
         }
 
-        while (Thread.activeCount() > 1) {
+        while (Thread.activeCount() > 2) {
             Thread.yield();
         }
         System.out.println(count);
@@ -97,7 +97,7 @@ class AtomicIntegerTest3 {
             threads[i].start();
         }
 
-        while (Thread.activeCount() > 1) {
+        while (Thread.activeCount() > 2) {
             Thread.yield();
         }
         System.out.println(count);
