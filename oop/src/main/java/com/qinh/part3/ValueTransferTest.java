@@ -8,7 +8,7 @@ public class ValueTransferTest {
 		ValueTransferTest test = new ValueTransferTest();
 		test.change(s1);
 		
-		System.out.println(s1);//hi~~
+		System.out.println(s1);//hello
 		
 		
 	}
