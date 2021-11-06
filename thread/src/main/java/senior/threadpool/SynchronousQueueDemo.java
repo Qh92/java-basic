@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 1、SynchronousQueue没有容量。与其他BlockingQueue不同，SynchronousQueue是一个不存储元素的BlockingQueue。
  * 2、每一个put操作必须要等待一个take操作，否则不能继续添加元素，反之亦然。
- * 一句话总结：SynchronousQueue 时零库存阻塞队列
+ * 一句话总结：SynchronousQueue 是零库存阻塞队列
  *
  * @author Qh
  * @version 1.0
