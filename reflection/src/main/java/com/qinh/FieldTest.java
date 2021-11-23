@@ -35,6 +35,12 @@ public class FieldTest {
         for(Field f : declaredFields){
             System.out.println(f);
         }
+        System.out.println();
+        //获取父类的所有属性（包含私有属性）
+        Field[] fields1 = clazz.getSuperclass().getDeclaredFields();
+        for (Field f : fields1){
+            System.out.println(f);
+        }
     }
 
     /**
