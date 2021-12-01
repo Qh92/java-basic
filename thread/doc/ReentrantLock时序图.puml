@@ -1,0 +1,22 @@
+@startuml
+ReentrantLock --> ReentrantLock: 0.state状态由当前持有锁的线程维护，waitStatus有等待线程维护
+ReentrantLock -> NonfairSync: 1.lock()，加锁
+NonfairSync -> AbstractQueuedSynchronizer: 2.compareAndSetState(0，1)，判断state值是否为0，如果为0，则修改state码值。修改成功执行步骤3，修改失败执行步骤4
+NonfairSync -> AbstractOwnableSynchronizer: 3.setExclusiveOwnerThread(Thread)，如果state值修改成功，则将线程设置进exclusiveOwnerThread属性，结束全流程
+NonfairSync -> AbstractQueuedSynchronizer: 4.acquire(1)，再次尝试获取锁
+AbstractQueuedSynchronizer -> NonfairSync: 5.tryAcquire(1)，尝试获取锁
+NonfairSync -> Sync: 6.nonfairTryAcquire(1)，如果state状态为0，则继续尝试修改state值，修改成功返回true，结束流程。如果当前线程是获取到锁的线程，则累加state值，并返回true，结束流程，否则返回false,并执行步骤7
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 7.tryAcquire(Node)，将当前线程封装为Node结点添加进阻塞队列。如果队列里没数据，则执行步骤8
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 8.enq(Node)，创建一个空结点（傀儡/哨兵结点）做为头结点，并将上述Node结点做为头结点的next结点
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 9.acquireQueued(Node,1)，如果当前结点的上一个结点为head结点，则再次尝试获取锁，获取到锁，将head指向下一个结点，清空该结点的所有属性，结束流程。没有获取到锁，执行步骤10
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 10.shouldParkAfterFailedAcquire(Node,Node)，如果前一个结点的waitStatus为0，修改waitStatus状态为-1
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 11.parkAndCheckInterrupt()，阻塞当前线程。同理，如果有多个线程等待锁，都将其放入阻塞队列里，阻塞着。
+
+ReentrantLock -> ReentrantLock: 1.unlock()，释放锁
+ReentrantLock -> AbstractQueuedSynchronizer: 2.release(1)
+AbstractQueuedSynchronizer -> ReentrantLock: 3.tryRelease(1)，将state值减1，如果state值为0，修改exclusiveOwnerThread属性为null，如果返回值为true，则执行步骤4，否则返回，但不能正常释放锁（eg.加了两次锁，只释放了一次）
+AbstractQueuedSynchronizer --> AbstractQueuedSynchronizer: 4.unparkSuccessor(Node)，修改头结点的waitStatus值为0，唤醒头结点的next结点的线程
+
+
+
+@enduml
