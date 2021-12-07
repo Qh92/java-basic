@@ -56,8 +56,14 @@ public class BigIntegerAndBigDecimalTest {
      */
     @Test
     public void t2(){
+        // 值要使用字符串 1/2 = 0.5 0.5/2 = 0.25 0.25/2 = 0.125 ...不能精确表达0.1
+        BigDecimal decimal = new BigDecimal(2.1);
+        // 2.100000000000000088817841970012523233890533447265625
+        System.out.println(decimal);
         BigDecimal bd = new BigDecimal("12435.351");
+        System.out.println(bd);
         BigDecimal bd2 = new BigDecimal("11");
+        System.out.println(bd2);
         //System.out.println(bd.divide(bd2));
         System.out.println(bd.divide(bd2, BigDecimal.ROUND_HALF_UP));
         System.out.println(bd.divide(bd2, 35, BigDecimal.ROUND_HALF_UP));
