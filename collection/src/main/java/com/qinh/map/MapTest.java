@@ -217,4 +217,34 @@ public class MapTest {
         hashtable.put(null,123);//java.lang.NullPointerException*/
 
     }
+
+    @Test
+    public void t() {
+        /*
+        为什么容量加载都是2的指数次幂？
+        要算出数组索引位置，通过位与运算比取模运算效率要高。抓住2的指数次方 - 1 的二进制数的每位数都是1，充分利用了数组长度
+        如果不是，假如此时数组长度为15 没有充分利用数组长度，容易产生hash碰撞
+         */
+        // 此时底层会将数组长度设置为2^8 = 16
+        HashMap<String, String> hashMap = new HashMap<>(13);
+
+        /*
+        jdk1.7 HashMap 多线程扩容的时候有可能造成死环，造成CPU飙高
+            void transfer(Entry[] newTable, boolean rehash) {
+            int newCapacity = newTable.length;
+            for (Entry<K,V> e : table) {
+                    while(null != e) {
+                        Entry<K,V> next = e.next;
+                        if (rehash) {
+                            e.hash = null == e.key ? 0 : hash(e.key);
+                        }
+                        int i = indexFor(e.hash, newCapacity);
+                        e.next = newTable[i];
+                        newTable[i] = e;
+                        e = next;
+                    }
+                }
+            }
+         */
+    }
 }
