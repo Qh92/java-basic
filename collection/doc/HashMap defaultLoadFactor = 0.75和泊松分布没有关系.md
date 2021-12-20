@@ -191,3 +191,9 @@ The concurrent-programming-like SSA-based coding style helps avoid aliasing erro
 3.提出来回转化的阈值8和6阈值为什么不一样
 
 至于为什么转化为红黑树的阈值8和转化为链表的阈值6不一样，是为了**避免频繁来回转化**
+
+
+
+![image-20211220212452503](assets\image-20211220212452503.png)
+
+![image-20211220214537642](assets\image-20211220214537642.png)
