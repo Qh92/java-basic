@@ -2,6 +2,7 @@ package com.qinh.exer;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -33,5 +34,33 @@ public class SetTest {
         System.out.println(set);//[Person{id=1002, name='BB'}, Person{id=1001, name='CC'}, Person{id=1001, name='CC'}]
         set.add(new Person(1001,"AA"));
         System.out.println(set);//[Person{id=1002, name='BB'}, Person{id=1001, name='CC'}, Person{id=1001, name='CC'}, Person{id=1001, name='AA'}]
+    }
+
+
+    /**
+     * HashMap原理同HashSet
+     */
+    @Test
+    public void t2() {
+        HashMap<Person,String> map = new HashMap<>();
+
+        Person p1 = new Person(1001, "AA");
+        Person p2 = new Person(1002, "BB");
+
+        map.put(p1, "p1");
+        map.put(p2, "p2");
+
+        p1.setName("CC");
+
+        System.out.println(map.get(p1));
+
+        map.put(new Person(1001,"CC"),"CC");
+
+        System.out.println(map.get(p1));
+
+        map.put(new Person(1001,"AA"),"aa");
+
+        System.out.println(map.get(new Person(1001,"AA")));
+
     }
 }
