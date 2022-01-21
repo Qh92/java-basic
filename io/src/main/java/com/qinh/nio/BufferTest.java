@@ -93,15 +93,15 @@ public class BufferTest {
         System.out.println(buffer.capacity());//1024
 
         System.out.println((char) buffer.get());//a
-        System.out.println("单个字节读取完毕: position : " + buffer.position());
+        System.out.println("单个字节读取完毕: position : " + buffer.position());//1
 
         str = "xyz";
         buffer.put(str.getBytes());
         buffer.flip();
         System.out.println("----------put() again---------");
-        System.out.println(buffer.position());
-        System.out.println(buffer.limit());
-        System.out.println(buffer.capacity());
+        System.out.println(buffer.position());//0
+        System.out.println(buffer.limit());//4
+        System.out.println(buffer.capacity());//1024
         for (int i = 0; i < buffer.limit(); i++) {
             System.out.println((char) buffer.get(i));
         }
