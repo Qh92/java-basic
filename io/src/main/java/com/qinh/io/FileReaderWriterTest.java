@@ -24,7 +24,7 @@ import java.io.*;
 public class FileReaderWriterTest {
 
     public static void main(String[] args) {
-        File file = new File("hello.txt");//相较于当前Module
+        File file = new File("hello.txt");//相较于当前Project
         System.out.println(file.getAbsoluteFile());//E:\ideaWorkspace\project\java_edu\javabasic\hello.txt
 
         File file2 = new File("io\\hello.txt");
