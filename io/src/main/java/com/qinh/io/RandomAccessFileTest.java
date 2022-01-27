@@ -2,9 +2,7 @@ package com.qinh.io;
 
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 /**
  * RandomAccessFile的使用
@@ -110,5 +108,43 @@ public class RandomAccessFileTest {
             }
         }
     }
+
     //思考：将StringBuilder替换为ByteArrayOutputStream
+    @Test
+    public void t4(){
+        RandomAccessFile raf1 = null;
+        ByteArrayOutputStream arrayOutputStream = null;
+        try {
+            raf1 = new RandomAccessFile("hello.txt", "rw");
+
+            //void seek(long pos)：将文件记录指针定位到 pos 位置
+            raf1.seek(3);
+
+            arrayOutputStream = new ByteArrayOutputStream((int) new File("hello.txt").length());
+            byte[] buffer = new byte[20];
+            int len;
+            while ((len = raf1.read(buffer)) != -1){
+                arrayOutputStream.write(buffer, 0, len);
+            }
+            //调回指针，写入“xyz”
+            raf1.seek(3);
+            raf1.write("xyz".getBytes());
+
+            //将StringBuilder中的数据写入到文件中
+            raf1.write(arrayOutputStream.toString().getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(raf1 != null)
+                    raf1.close();
+                if (arrayOutputStream != null) {
+                    arrayOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
