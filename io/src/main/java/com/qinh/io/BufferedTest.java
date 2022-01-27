@@ -155,6 +155,7 @@ public class BufferedTest {
                 //方式1
                 //bw.write(data + "\n");//data中不包含换行符
                 //方式2
+                System.out.println(data);
                 bw.write(data);
                 bw.newLine();//提供换行的操作
             }
