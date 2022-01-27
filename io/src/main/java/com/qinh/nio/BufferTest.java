@@ -105,6 +105,7 @@ public class BufferTest {
         for (int i = 0; i < buffer.limit(); i++) {
             System.out.println((char) buffer.get(i));
         }
+        System.out.println("get(i)完数据position是否移动: " + buffer.position());
     }
 
     @Test
