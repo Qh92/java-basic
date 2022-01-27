@@ -96,10 +96,11 @@ public class TestNIO_2 {
     @Test
     public void test4() throws IOException{
         Path dir = Paths.get("e:/nio/nio2");
-//		Files.createDirectory(dir);
+        // 此方法要上级目录存在
+		//Files.createDirectory(dir);
 
         Path file = Paths.get("e:/nio/nio2/hello3.txt");
-//		Files.createFile(file);
+		//Files.createFile(file);
 
         Files.deleteIfExists(file);
     }
