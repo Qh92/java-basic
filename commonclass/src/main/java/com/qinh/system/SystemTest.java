@@ -16,12 +16,18 @@ import org.junit.Test;
  * 非零代表异常退出。使用该方法可以在图形界面编程中实现程序的退出功能等。
  *  void gc()： 该方法的作用是请求系统进行垃圾回收。至于系统是否立刻回收，则取决于系统中垃圾回收算法的实现以及系统执行时的情况。
  *  String getProperty(String key)： 该方法的作用是获得系统中属性名为key的属性对应的值。
+ * VM Options -Dname=qinhao
  *
  * @author Qh
  * @version 1.0
  * @date 2021-04-10-20:43
  */
 public class SystemTest {
+
+    public static void main(String[] args){
+        // 虚拟机参数设置：-Dname=qinhao
+        System.out.println(System.getProperty("name"));
+    }
 
     @Test
     public void t1(){
@@ -52,5 +58,6 @@ public class SystemTest {
         //用户的当前工作目录
         String userDir = System.getProperty("user.dir");
         System.out.println("user的dir:" + userDir);
+
     }
 }
